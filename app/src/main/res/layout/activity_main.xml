@@ -7,8 +7,15 @@
   android:layout_height="match_parent"
   tools:context=".controller.MainActivity">
 
+  <ListView
+    android:id="@+id/guess_list"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/guess_controls"/>
 
-<LinearLayout
+  <LinearLayout
     android:id="@+id/guess_controls"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,9 +25,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintBottom_toBottomOf="parent">
 
-
     <EditText
-
       android:id="@+id/guess"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -28,19 +33,16 @@
       android:layout_margin="8dp"
       android:inputType="textCapCharacters"
       android:maxLength="4"
-      android:hint="@string/guess_hint"
-      android:importantForAutofill="no"/>
+      android:hint="@string/guess_hint"/>
 
     <Button
       android:id="@+id/submit"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_weight="2"
+      android:layout_weight="1"
       android:layout_margin="8dp"
       android:text="@string/submit"/>
 
-
   </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
