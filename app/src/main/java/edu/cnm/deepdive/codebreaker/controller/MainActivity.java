@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
-  private static final String POOL = "ROYGBIV";
+  private static final String POOL = "ROYGBV";
   private static final int CODE_LENGTH = 4;
 
   private ListView guessList;
