@@ -2,15 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="@dimen/guess_height"
-  android:layout_height="60dp"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/guess_height"
   android:padding="@dimen/half_static_spacing"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <TextView
     android:id="@+id/guess_number"
     android:layout_width="@dimen/guess_number_width"
-    android:layout_height="@dimen/guess_height"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/half_static_spacing"
     style="@style/GuessNumber"
     app:layout_constraintStart_toStartOf="parent"
@@ -21,12 +21,12 @@
   <LinearLayout
     android:id="@+id/guess_container"
     android:layout_width="0dp"
-    android:layout_height="match_parent"
+    android:layout_height="0dp"
     android:orientation="horizontal"
     android:layout_margin="0dp"
     app:layout_constraintStart_toEndOf="@id/guess_number"
     app:layout_constraintEnd_toStartOf="@id/result_container"
-    app:layout_constraintBottom_toTopOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"/>
 
   <ImageView
