@@ -1,28 +1,30 @@
 package edu.cnm.deepdive.codebreaker.controller;
 
+import android.graphics.Color;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import edu.cnm.deepdive.codebreaker.R;
 import edu.cnm.deepdive.codebreaker.adapter.GuessAdapter;
 import edu.cnm.deepdive.codebreaker.model.Code.Guess;
 import edu.cnm.deepdive.codebreaker.model.Game;
+import edu.cnm.deepdive.codebreaker.viewmodel.MainViewModel;
 import java.security.SecureRandom;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
-  private static final String POOL = "ROYGBV";
-  private static final int CODE_LENGTH = 4;
+  private static final int[] colorValues =
+      {Color.RED, 0xffffa500, Color.YELLOW, Color.GREEN, Color.BLUE, 0xff4b0082, 0xffee82ee};
+  private static final Map<Character, Integer> colorMap =
+      buildColorMap(MainViewModel.POOL.toCharArray(), colorValues);
 
   private ListView guessList;
   private EditText guess;
@@ -38,25 +40,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     guessList = findViewById(R.id.guess_list);
     guess = findViewById(R.id.guess);
     submit = findViewById(R.id.submit);
-    submit.setOnClickListener(this);
-    guessList.setAdapter(adapter);
-    adapter = new GuessAdapter(this);
-    rng = new SecureRandom();
-    startGame();
-  }
+    submit.setOnClickListener(view -> recordGuess());{
+      adapter = new GuessAdapter(this, colorMap);
+      rng = new SecureRandom();
+      startGame();
+      recordGuess();
+    }
 
-  private void startGame() {
-    game = new Game(POOL, CODE_LENGTH, rng);
-    resetList();
-  }
-  private void restartGame() {
-    game.restart();
-    resetList();
-  }
 
-  private void resetList() {
-    adapter.clear();
-    guessList.setAdapter(adapter);
   }
 
   @Override
@@ -82,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     return handled;
   }
 
-  @Override
-  public void onClick(View v) {
+
+  public void recordGuess() {
     try {
       String text = this.guess.getText().toString().toUpperCase();
       Guess guess = game.guess(text);
@@ -95,4 +86,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     }
   }
 
+  private void startGame() {
+    game = new Game(MainViewModel.POOL, MainViewModel.CODE_LENGTH, rng);
+    resetList();
+  }
+
+  private void restartGame() {
+    game.restart();
+    resetList();
+  }
+
+  private void resetList() {
+    adapter.clear();
+    guessList.setAdapter(adapter);
+  }
+
+  private static Map<Character, Integer> buildColorMap(char[] chars, int[] values) {
+    Map<Character, Integer> colorMap = new HashMap<>();
+    for (int i = 0; i < chars.length; i++) {
+      colorMap.put(chars[i], values[i]);
+    }
+    return colorMap;
+  }
 }
