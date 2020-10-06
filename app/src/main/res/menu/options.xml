@@ -9,11 +9,15 @@
     android:titleCondensed="@string/new_game_condensed"
     android:icon="@drawable/ic_add"
     app:showAsAction="always"
-    tools:ignore="AlwaysShowAction"/>/>
+    tools:ignore="AlwaysShowAction"/>
 
   <item android:id="@+id/restart_game"
-    android:title="Restart game"
+    android:title="@string/restart_game"
     android:titleCondensed="Restart"
     android:icon="@drawable/ic_replay"
     app:showAsAction="always"/>
+  <item
+    android:id="@+id/settings"
+    android:title="@string/settings"
+    app:showAsAction="never"/>
 </menu>
