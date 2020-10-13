@@ -6,7 +6,7 @@
   <dimen name="guess_number_width">48dp</dimen>
   <dimen name="guess_number_size">24sp</dimen>
   <dimen name="guess_number_padding">8dp</dimen>
-  <dimen name="hal_margin">8dp</dimen>
+  <dimen name="half_margin">8dp</dimen>
   <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.
