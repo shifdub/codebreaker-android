@@ -12,7 +12,6 @@
     android:layout_width="@dimen/guess_number_width"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/half_static_spacing"
-
     style="@style/GuessNumber"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
