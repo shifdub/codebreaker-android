@@ -1,0 +1,155 @@
+Index: app/src/main/java/edu/cnm/deepdive/codebreaker/controller/GameFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package edu.cnm.deepdive.codebreaker.controller;\n\nimport android.content.Intent;\nimport android.graphics.Color;\nimport android.os.Bundle;\nimport android.text.InputFilter;\nimport android.text.Spanned;\nimport android.view.LayoutInflater;\nimport android.view.Menu;\nimport android.view.MenuInflater;\nimport android.view.MenuItem;\nimport android.view.View;\nimport android.view.ViewGroup;\nimport android.widget.Toast;\nimport androidx.annotation.NonNull;\nimport androidx.annotation.Nullable;\nimport androidx.fragment.app.Fragment;\nimport androidx.fragment.app.FragmentActivity;\nimport androidx.lifecycle.LifecycleOwner;\nimport androidx.lifecycle.ViewModelProvider;\nimport edu.cnm.deepdive.codebreaker.R;\nimport edu.cnm.deepdive.codebreaker.adapter.GuessAdapter;\nimport edu.cnm.deepdive.codebreaker.databinding.FragmentGameBinding;\nimport edu.cnm.deepdive.codebreaker.viewmodel.MainViewModel;\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class GameFragment extends Fragment implements InputFilter{\n\n  private static final String INVALID_CHAR_PATTERN = String.format(\"[^%s]\", MainViewModel.POOL);\n  private static final int[] colorValues =\n      {Color.RED, 0xffffa500, Color.YELLOW, Color.GREEN, Color.BLUE, 0xff4b0082, 0xffee82ee};\n  private static final Map<Character, Integer> colorMap =\n      buildColorMap(MainViewModel.POOL.toCharArray(), colorValues);\n\n  private MainViewModel viewModel;\n  private GuessAdapter adapter;\n  private int codeLength;\n  private FragmentGameBinding binding;\n\n  @Override\n  public void onCreate(Bundle savedInstanceState) {\n    super.onCreate(savedInstanceState);\n    setHasOptionsMenu(true);\n  }\n  @Nullable\n  @Override\n  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,\n      @Nullable Bundle savedInstanceState) {\n    binding = FragmentGameBinding.inflate(getLayoutInflater());\n    setupViews();\n    return binding.getRoot();\n  }\n\n  private void setupViewModel() {\n    FragmentActivity activity = getActivity();\n    //noinspection ConstantConditions\n    adapter = new GuessAdapter(activity, colorMap);\n\n    viewModel = new ViewModelProvider(activity).get(MainViewModel.class);\n    LifecycleOwner lifecycleOwner = getViewLifecycleOwner();\n    viewModel.getGame().observe(lifecycleOwner, (game) -> {\n      adapter.clear();\n      adapter.addAll(game.getGuesses());\n      binding.guessList.setAdapter(adapter);\n      binding.guessList.setSelection(adapter.getCount() - 1);\n      codeLength = game.getLength();\n      binding.guess.setText(\"\");\n    });\n    viewModel.getSolved().observe(lifecycleOwner, solved ->\n        binding.guessControls.setVisibility(solved ? View.INVISIBLE :View.VISIBLE));\n    viewModel.getThrowable().observe(lifecycleOwner, (throwable)-> {\n      if(throwable != null) {\n        Toast.makeText(activity, throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();\n      }\n    });\n  }\n\n  private void setupViews() {\n    binding.guess.setFilters(new InputFilter[]{this});\n    binding.submit.setOnClickListener((view) -> recordGuess());\n\n  }\n\n  @Override\n  public void onViewCreated(@NonNull  View view, @Nullable Bundle savedInstanceState) {\n    super.onViewCreated(view, savedInstanceState);\n    setupViewModel();\n  }\n\n  @Override\n  public void onCreateOptionsMenu(@NonNull Menu menu,@NonNull MenuInflater inflater) {\n    super.onCreateOptionsMenu(menu, inflater);\n    inflater.inflate(R.menu.game_options, menu);\n  }\n\n  @Override\n  public boolean onOptionsItemSelected(@NonNull MenuItem item) {\n    boolean handled = true;\n    switch (item.getItemId()) {\n      case R.id.new_game:\n        startGame();\n        break;\n      case R.id.restart_game:\n        restartGame();\n        break;\n        default:\n        handled = super.onOptionsItemSelected(item);\n    }\n    return handled;\n  }\n\n  private void recordGuess() {\n    viewModel.guess(binding.guess.getText().toString().trim().toUpperCase());\n  }\n\n  private void startGame() {\n    viewModel.startGame();\n  }\n\n  private void restartGame() {\n    viewModel.restartGame();\n  }\n\n  private static Map<Character, Integer> buildColorMap(char[] chars, int[] values) {\n    Map<Character, Integer> colorMap = new HashMap<>();\n    for (int i = 0; i < chars.length; i++) {\n      colorMap.put(chars[i], values[i]);\n    }\n    return colorMap;\n  }\n\n  @Override\n  public CharSequence filter(CharSequence source, int sourceStart, int sourceEnd,\n      Spanned dest, int destStart, int destEnd) {\n    String modifiedSource = source.toString().toUpperCase().replaceAll(INVALID_CHAR_PATTERN, \"\");\n    StringBuilder builder = new StringBuilder(dest);\n    builder.replace(destStart, destEnd, modifiedSource);\n    if (builder.length() > codeLength) {\n      modifiedSource =\n          modifiedSource.substring(0, modifiedSource.length() - (builder.length() - codeLength));\n    }\n    int newLength = dest.length() - (destEnd - destStart) + modifiedSource.length();\n    binding.submit.setEnabled(newLength == codeLength);\n    return modifiedSource;\n  }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/edu/cnm/deepdive/codebreaker/controller/GameFragment.java	(revision d94b733ede248c2026a3e797fb29b4f47fb0a48f)
++++ app/src/main/java/edu/cnm/deepdive/codebreaker/controller/GameFragment.java	(date 1602557699021)
+@@ -25,7 +25,7 @@
+ import java.util.HashMap;
+ import java.util.Map;
+ 
+-public class GameFragment extends Fragment implements InputFilter{
++public class GameFragment extends Fragment implements InputFilter {
+ 
+   private static final String INVALID_CHAR_PATTERN = String.format("[^%s]", MainViewModel.POOL);
+   private static final int[] colorValues =
+@@ -43,6 +43,7 @@
+     super.onCreate(savedInstanceState);
+     setHasOptionsMenu(true);
+   }
++
+   @Nullable
+   @Override
+   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+@@ -52,44 +53,14 @@
+     return binding.getRoot();
+   }
+ 
+-  private void setupViewModel() {
+-    FragmentActivity activity = getActivity();
+-    //noinspection ConstantConditions
+-    adapter = new GuessAdapter(activity, colorMap);
+-
+-    viewModel = new ViewModelProvider(activity).get(MainViewModel.class);
+-    LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+-    viewModel.getGame().observe(lifecycleOwner, (game) -> {
+-      adapter.clear();
+-      adapter.addAll(game.getGuesses());
+-      binding.guessList.setAdapter(adapter);
+-      binding.guessList.setSelection(adapter.getCount() - 1);
+-      codeLength = game.getLength();
+-      binding.guess.setText("");
+-    });
+-    viewModel.getSolved().observe(lifecycleOwner, solved ->
+-        binding.guessControls.setVisibility(solved ? View.INVISIBLE :View.VISIBLE));
+-    viewModel.getThrowable().observe(lifecycleOwner, (throwable)-> {
+-      if(throwable != null) {
+-        Toast.makeText(activity, throwable.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+-      }
+-    });
+-  }
+-
+-  private void setupViews() {
+-    binding.guess.setFilters(new InputFilter[]{this});
+-    binding.submit.setOnClickListener((view) -> recordGuess());
+-
+-  }
+-
+   @Override
+-  public void onViewCreated(@NonNull  View view, @Nullable Bundle savedInstanceState) {
++  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+     super.onViewCreated(view, savedInstanceState);
+     setupViewModel();
+   }
+ 
+   @Override
+-  public void onCreateOptionsMenu(@NonNull Menu menu,@NonNull MenuInflater inflater) {
++  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+     super.onCreateOptionsMenu(menu, inflater);
+     inflater.inflate(R.menu.game_options, menu);
+   }
+@@ -104,32 +75,12 @@
+       case R.id.restart_game:
+         restartGame();
+         break;
+-        default:
++      default:
+         handled = super.onOptionsItemSelected(item);
+     }
+     return handled;
+   }
+ 
+-  private void recordGuess() {
+-    viewModel.guess(binding.guess.getText().toString().trim().toUpperCase());
+-  }
+-
+-  private void startGame() {
+-    viewModel.startGame();
+-  }
+-
+-  private void restartGame() {
+-    viewModel.restartGame();
+-  }
+-
+-  private static Map<Character, Integer> buildColorMap(char[] chars, int[] values) {
+-    Map<Character, Integer> colorMap = new HashMap<>();
+-    for (int i = 0; i < chars.length; i++) {
+-      colorMap.put(chars[i], values[i]);
+-    }
+-    return colorMap;
+-  }
+-
+   @Override
+   public CharSequence filter(CharSequence source, int sourceStart, int sourceEnd,
+       Spanned dest, int destStart, int destEnd) {
+@@ -145,4 +96,47 @@
+     return modifiedSource;
+   }
+ 
++  private void setupViews() {
++    binding.guess.setFilters(new InputFilter[]{this});
++    binding.submit.setOnClickListener((view) -> recordGuess());
++  }
++
++  private void setupViewModel() {
++    FragmentActivity activity = getActivity();
++    //noinspection ConstantConditions
++    adapter = new GuessAdapter(activity, colorMap);
++    viewModel = new ViewModelProvider(activity).get(MainViewModel.class);
++    LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
++    viewModel.getGame().observe(lifecycleOwner, (game) -> {
++      adapter.clear();
++      adapter.addAll(game.getGuesses());
++      binding.guessList.setAdapter(adapter);
++      binding.guessList.setSelection(adapter.getCount() - 1);
++      codeLength = game.getLength();
++      binding.guess.setText("");
++    });
++    viewModel.getSolved().observe(lifecycleOwner, solved ->
++        binding.guessControls.setVisibility(solved ? View.INVISIBLE : View.VISIBLE));
++  }
++
++  private void recordGuess() {
++    viewModel.guess(binding.guess.getText().toString().trim().toUpperCase());
++  }
++
++  private void startGame() {
++    viewModel.startGame();
++  }
++
++  private void restartGame() {
++    viewModel.restartGame();
++  }
++
++  private static Map<Character, Integer> buildColorMap(char[] chars, int[] values) {
++    Map<Character, Integer> colorMap = new HashMap<>();
++    for (int i = 0; i < chars.length; i++) {
++      colorMap.put(chars[i], values[i]);
++    }
++    return colorMap;
++  }
++
+ }

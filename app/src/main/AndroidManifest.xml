@@ -11,16 +11,11 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-
     <activity
-      android:label="@string/title_activity_setting"
+      android:label="@string/title_activity_settings"
       android:name=".controller.SettingsActivity"
       android:parentActivityName=".controller.MainActivity">
     </activity>
-    <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
     <activity android:name=".controller.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -30,6 +25,5 @@
     </activity>
 
   </application>
-
 
 </manifest>
