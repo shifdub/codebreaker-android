@@ -8,10 +8,11 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import edu.cnm.deepdive.codebreaker.model.entity.doa.GameDao;
 import edu.cnm.deepdive.codebreaker.model.entity.Game;
+import edu.cnm.deepdive.codebreaker.service.CodeBreakerDatabase.Converters;
 import java.util.Date;
 
 @Database(entities = {Game.class}, version = 1)
-@TypeConverters({TypeConverters.class})
+@TypeConverters({Converters.class})
 public abstract class CodeBreakerDatabase extends RoomDatabase {
 
   private static final String DB_NAME = "codebreaker_db";
