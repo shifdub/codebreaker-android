@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.codebreaker.GameDao.model.doa;
+package edu.cnm.deepdive.codebreaker.model.entity.doa;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
