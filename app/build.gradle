@@ -13,13 +13,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ['room.schemaLocation': "$projectDir/schemas".toString()]
-            }
-        }
-
     }
 
     buildTypes {
@@ -40,7 +33,7 @@ android {
 
 }
 
-    dependencies {
+dependencies {
 
     // .jar-based libraries included in project
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -54,13 +47,6 @@ android {
 
     // Preferences/settings dependencies
     implementation 'androidx.preference:preference:1.1.1'
-
-    // Fragment navigation dependencies.
-    implementation "androidx.navigation:navigation-fragment:$navigation_version"
-    implementation "androidx.navigation:navigation-ui:$navigation_version"
-    implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Lifecycle (LiveData and ViewModel) dependencies
     def lifecycle_version = '2.2.0'
@@ -79,10 +65,9 @@ android {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
 
-    // Stetho (inspection) dependency
+    //Stetho (inspection) dependency
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
-    // Test dependencies
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
