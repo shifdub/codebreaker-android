@@ -6,35 +6,37 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
-import edu.cnm.deepdive.codebreaker.model.entity.doa.GameDao;
-import edu.cnm.deepdive.codebreaker.model.entity.Game;
-import edu.cnm.deepdive.codebreaker.service.CodeBreakerDatabase.Converters;
+import edu.cnm.deepdive.codebreaker.model.entity.Score;
+import edu.cnm.deepdive.codebreaker.model.entity.doa.ScoreDao;
+import edu.cnm.deepdive.codebreaker.service.CodebreakerDatabase.Converters;
 import java.util.Date;
 
-@Database(entities = {Game.class}, version = 1)
+@Database(entities = {Score.class}, version = 1, exportSchema = true)
 @TypeConverters({Converters.class})
-public abstract class CodeBreakerDatabase extends RoomDatabase {
+public abstract class CodebreakerDatabase extends RoomDatabase {
 
   private static final String DB_NAME = "codebreaker_db";
+
   private static Application context;
 
   public static void setContext(Application context) {
-    CodeBreakerDatabase.context = context;
+    CodebreakerDatabase.context = context;
   }
 
-  public static CodeBreakerDatabase getInstance() {
+  public static CodebreakerDatabase getInstance() {
     return InstanceHolder.INSTANCE;
   }
 
-  public abstract GameDao getGameDao();
+  public abstract ScoreDao getScoreDao();
 
   private static class InstanceHolder {
 
-    private static final CodeBreakerDatabase INSTANCE =
-        Room.databaseBuilder(context, CodeBreakerDatabase.class, DB_NAME)
+    private static final CodebreakerDatabase INSTANCE =
+        Room.databaseBuilder(context, CodebreakerDatabase.class, DB_NAME)
             .build();
 
   }
+
   public static class Converters {
 
     @TypeConverter
@@ -50,4 +52,5 @@ public abstract class CodeBreakerDatabase extends RoomDatabase {
   }
 
 }
+
 
