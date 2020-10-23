@@ -28,6 +28,7 @@ public class CodeCharacterAdapter extends ArrayAdapter<Character> {
     inflater = LayoutInflater.from(context);
   }
 
+  //fix
   @NonNull
   @Override
   public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
