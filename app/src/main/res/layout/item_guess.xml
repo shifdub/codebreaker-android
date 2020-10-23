@@ -21,7 +21,7 @@
   <LinearLayout
     android:id="@+id/guess_container"
     android:layout_width="0dp"
-    android:layout_height="0dp"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
     android:layout_margin="0dp"
     app:layout_constraintStart_toEndOf="@id/guess_number"
@@ -33,6 +33,7 @@
     android:id="@+id/result_container"
     android:layout_width="0dp"
     android:layout_height="0dp"
+    android:layout_margin="@dimen/half_static_spacing"
     android:src="@drawable/result_guess"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +46,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/half_static_spacing"
-
     tools:text="2"
     style="@style/GuessResultText"
     app:layout_constraintLeft_toLeftOf="@id/result_container"
@@ -55,7 +55,6 @@
     android:id="@+id/close"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:includeFontPadding="false"
     android:layout_margin="@dimen/half_static_spacing"
     tools:text="2"
     style="@style/GuessResultText"

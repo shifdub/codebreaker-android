@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity
-public class Score {
+public class Game {
 
   @PrimaryKey(autoGenerate = true)
   @ColumnInfo(name = "game_id")
@@ -36,4 +36,21 @@ public class Score {
   public void setTimestamp(Date timestamp) {
     this.timestamp = timestamp;
   }
+
+  public int getGuessCount() {
+    return guessCount;
+  }
+
+  public void setGuessCount(int guessCount) {
+    this.guessCount = guessCount;
+  }
+
+  public int getCodeLength() {
+    return codeLength;
+  }
+
+  public void setCodeLength(int codeLength) {
+    this.codeLength = codeLength;
+  }
+
 }

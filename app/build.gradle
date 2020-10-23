@@ -47,6 +47,9 @@ dependencies {
 
     // Preferences/settings dependencies
     implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
 
     // Lifecycle (LiveData and ViewModel) dependencies
     def lifecycle_version = '2.2.0'
